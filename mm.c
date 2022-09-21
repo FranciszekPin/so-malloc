@@ -1,9 +1,10 @@
 /*
  * Franciszek Pindel 323506 the only author of following source code (excluding
- * fragments from mm-implicit.c) Technique: segregated sort, searching in list
- * with first-fit segregated list setup: blocks for allocating 8, 16, 24, ...,
- * 64, 80 - 96, 112- 160, 176 - inf bytes there are no optimized boundary tags,
- * as they decreased nops without increasing util
+ * fragments from mm-implicit.c).
+ * Technique: segregated sort, searching in list with first-fit segregated list
+ * setup: blocks for allocating 8, 16, 24, ..., 64, 80 - 96, 112- 160, 176 - inf
+ * bytes. There are no optimized boundary tags,  as they decreased nops without
+ * increasing util.
  */
 #include <assert.h>
 #include <stdio.h>
@@ -58,7 +59,7 @@ static word_t *last;       /* Points at last block */
 static word_t *guard_blocks_start;
 static word_t *guard_blocks_end;
 
-/* fre lists are divided into two categories:
+/* Free lists are divided into two categories:
  * const lists - they contain blocks of one specific size
  * segment lists - they contain block of size in some range
  * (range is increasing by the power of 2)
@@ -119,7 +120,7 @@ static inline word_t *bt_prev(word_t *bt) {
   return (bt == heap_start) ? NULL : (void *)bt - bt_size(bt - 1);
 }
 
-/* --=[ free block list hendling ]=----------------------------------------- */
+/* --=[ free block list handling ]=----------------------------------------- */
 
 /*
  * creates guards as first and last blocks in free block list.
@@ -272,7 +273,7 @@ static word_t *find_block_in_list(word_t *list, size_t size) {
 }
 
 /* start searching in first list with block large enough, then search in
- * following lists until finind free block. Return NULL is there is no free
+ * following lists until finding free block. Return NULL if there is no free
  * block. */
 static word_t *find_free_block(size_t size) {
   word_t *list_to_check = get_list(size);
